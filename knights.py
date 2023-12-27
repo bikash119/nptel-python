@@ -81,6 +81,6 @@ class Knight:
 
 # knight = Knight((7,7))
 # neighbours = knight.find_neighbours((8,8))
-is_attack_possible= attack_possible((0,0),(1,1))
+is_attack_possible= attack_possible((2,1),(0,0))
 print(is_attack_possible)
 # print(neighbours)
