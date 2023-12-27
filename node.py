@@ -77,8 +77,8 @@ class Node:
             newnode = Node(value)
             (newnode.value,self.value) = (self.value,newnode.value)
             (newnode.next,self.next) = (self.next,newnode)
-    # delete a node by index
-    def deletei(self,index) -> (int,bool):
+    # delete a node by index interatively
+    def delete_by_index_i(self,index) -> (int,bool):
         '''
         Usage : l.delete(0)
         '''
@@ -117,6 +117,54 @@ class Node:
 
         # List with more than one node
 
+    # delete a node by value iteratively
+    def delete_by_value_i(self,value) -> (int,bool):
+        # empty list
+        if self.isempty():
+            return (None,False)
+        # If current node value is the value to be deleted
+        elif self.value == value:
+            # if the list has only one node
+            if self.next == None:
+                value = self.value
+                self.value = None
+                return (value,True)
+            # if the first node is the node to be deleted
+            else:
+                value = self.value
+                (self.value,self.next.value) = (self.next.value,self.value)
+                self.next = self.next.next
+                return (value,True)
+        else:
+            while self.next != None:
+                if self.next.value != value:
+                    self = self.next
+                else:
+                    value = self.next.value
+                    self.next = self.next.next
+                    return(value,True)
+
+    def delete_by_value_r(self,value) -> (int,bool):
+        # check if empty
+        if self.isempty():
+            return (-1,False)
+        elif self.value == value:
+            if self.next == None: # first and only element in the list
+                value = self.value
+                self.value = None
+                return (value,True)
+            else:
+                (self.value,self.next.value) = (self.next.value,self.value)
+                self.next = self.next.next
+                return (value,True)
+        else:
+            if self.next != None:
+                self.next.delete_by_value_r(value)
+                if self.next.value == None:
+                    self.next = None
+            else:
+                return (-1,False)
+                
     def __str__(self):
         elems = []
         # Empty list
@@ -136,14 +184,8 @@ class Node:
     # 1. test all scenarios
     # 2. enable code coverage
 l = Node()
-l.append(5)
-print(l) # Should print [5]
-print(l.leni()) # should print 1
-l.appendi(4)
-print(l) # should print [5,4]
-print(l.lenr()) # should print 2
-l.insert(12)
+for i in range(11):
+    l.append(i)
 print(l)
-l.append(11)
-l.deletei(0)
-l.deletei(2)
+l.delete_by_value_r(10)
+print(l)
